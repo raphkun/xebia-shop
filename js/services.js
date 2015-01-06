@@ -13,7 +13,7 @@ bookshopServices.factory('Book', ['$resource', function($resource) {
 }
 ]);
 
-bookshopServices.factory('appServices', function($location, $http, $mdToast, toastPosition, ngCart) {
+bookshopServices.factory('appServices', function($location, $http, $mdToast, ngCart) {
 	return {
 		computeBestReduction: function() {
 
