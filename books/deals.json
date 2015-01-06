@@ -1,0 +1,14 @@
+{
+  "offers": [
+    {
+      "type": "percentage",
+      "value": 5
+    },
+
+    {
+      "type": "slice",
+      "sliceValue": 100,
+      "value": 12
+    }
+  ]
+}

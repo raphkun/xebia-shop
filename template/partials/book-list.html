@@ -1,0 +1,17 @@
+<div ng-controller="BookListCtrl" layout="column" layout-align="space-around start">
+  <md-content layout-fill layout="row" layout-align="start start" layout-margin>
+    <h1 flex>Collection Henri Potier</h1>
+    <md-button flex="5" class="md-raised" ng-click="goToCart()" aria-label="go to cart">
+      <ngcart-summary></ngcart-summary>
+    </md-button>
+  </md-content>
+  <div layout="row" layout-align="start start" layout-padding style="flex-wrap: wrap;">
+    <md-card ng-repeat="book in books | filter:query" layout-align="center center">
+      <a href="#/books/{{book.isbn}}"><img ng-src="{{book.cover}}" class="md-card-image" /></a>
+      <h2>
+        <a class="title" href="#/books/{{book.isbn}}" title="{{book.title}}">{{book.title}}</a>
+      </h2>
+      <md-button md-no-ink class="md-primary price" ng-click="addToCart(book)">{{book.price}} &euro;</md-button>
+    </md-card>
+  </div>
+</div>

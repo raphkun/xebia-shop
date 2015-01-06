@@ -1,0 +1,11 @@
+<md-content ng-controller="CartCtrl">
+  <h1>Votre panier</h1>
+  <span>{{alert}}</span>
+  <ngcart-cart layout-fill layout-margin></ngcart-cart>
+  <md-content layout-fill layout-margin layout="row" layout-align="start start">
+    <div flex="60"></div>
+    <md-button flex="" class="md-raised" ng-click="backToShop()">Poursuivre mes achats</md-button>
+    <md-button flex="" class="md-raised md-primary" ng-click="checkout($event)">Proc&eacute;der au paiement</md-button>
+    <div flex="5"></div>
+  </md-content>
+</md-content>
