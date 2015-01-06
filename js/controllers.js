@@ -33,7 +33,7 @@ bookshopControllers.controller('BookDetailCtrl', ['$scope', '$http', '$filter', 
 	};
 }]);
 
-bookshopControllers.controller('CartCtrl', ['$scope', 'appServices', '$http', '$mdDialog', 'ngCart', function($scope, appServices, $http, $mdDialog, ngCart) {
+bookshopControllers.controller('CartCtrl', ['$scope', 'appServices', '$http', '$mdDialog', '$mdToast','ngCart', function($scope, appServices, $http, $mdDialog, $mdToast, ngCart) {
 	appServices.computeBestReduction();
 
 	$scope.removeFromCart = function(isbn) {
@@ -46,21 +46,26 @@ bookshopControllers.controller('CartCtrl', ['$scope', 'appServices', '$http', '$
 	};
 
 	$scope.checkout = function(ev) {
-		var confirm = $mdDialog.confirm()
-			.title('Confirmation de la commande')
-			.content(ngCart.totalItems() + ' article(s) pour un total de ' + ngCart.totalCost() + '\u20AC')
-			.ok('Acheter')
-			.cancel('Annuler')
-			.targetEvent(ev)
-		;
-
-		$mdDialog
-			.show(confirm)
-			.then(function() {
-				$scope.alert = 'Commande effectuee.';
-			},
-			function() {
-				$scope.alert = '';
-			});
+		if (ngCart.totalItems() > 0) {
+			var confirm = $mdDialog.confirm()
+				.title('Confirmation de la commande')
+				.content(ngCart.totalItems() + ' article(s) pour un total de ' + ngCart.totalCost() + '\u20AC')
+				.ok('Acheter')
+				.cancel('Annuler')
+				.targetEvent(ev)
+			;
+	
+			$mdDialog
+				.show(confirm)
+				.then(function() {
+					$scope.alert = 'Commande effectuee.';
+				},
+				function() {
+					$scope.alert = '';
+				});
+		}
+		else {
+			$mdToast.show($mdToast.simple().content("Votre panier est vide !").position('top right'));
+		}
 	};
 }]);
