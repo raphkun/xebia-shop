@@ -1,0 +1,16 @@
+{  
+    "YOUR_CART" : "Votre panier",
+    "YOUR_CART_EMPTY" : "Votre panier est vide pour le moment",
+    
+    "ADD_TO_CART" : "Acheter",
+    "REMOVE_FROM_CART" : "retirer du panier",
+    "BACK_TO_SHOP" : "Poursuivre mes achats",
+    "CHECKOUT" : "Proc\u00e9der au paiement",
+    "CHECKOUT_DIALOG_TITLE" : "Confirmation de la commande",
+    "CHECKOUT_DIALOG_ITEMS_NUMBER" : " article(s) pour un total de ",
+    
+    "PAY" : "Payer",
+    "ORDER_COMPLETE" : "Commande effectu\u00e9e.",
+    "CANCEL" : "Annuler",
+    "CURRENCY_SYM" : "\u20AC"
+}

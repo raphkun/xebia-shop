@@ -1,71 +1,96 @@
 var bookshopControllers = angular.module('bookshopControllers', []);
 
-bookshopControllers.controller('BookListCtrl', ['$scope', 'Book', 'appServices', 'ngCart', function($scope, Book, appServices, ngCart) {
+bookshopControllers.controller('BookListCtrl', ['$scope', '$mdToast', 'BookCollection', 'appServices', function($scope, $mdToast, BookCollection, appServices) {
 
-	$scope.books = Book.query();
-	//$scope.orderProp = 'title';
-
+    var collection = new BookCollection();
+    collection.getBooks().then(function(){
+	    $scope.books = collection.books;
+    });
+	
 	$scope.goToCart = function() {
-		appServices.go('/cart');
+		appServices.goToUrl('/cart');
 	};
 
 	$scope.addToCart = function(book) {
-		appServices.addToCart(book);
-		appServices.go('/cart');
+		var sMessage = appServices.addToCart(book);
+		$mdToast.show($mdToast.simple().content(sMessage).position('top right'));
+		//appServices.goToUrl('/cart'); // none of my testers liked to be redirected to the cart :(
 	};
-
 }]);
 
-bookshopControllers.controller('BookDetailCtrl', ['$scope', '$http', '$filter', '$routeParams', 'appServices', 'ngCart', function($scope, $http, $filter, $routeParams, appServices, ngCart) {
-
-	$http.get('http://henri-potier.xebia.fr/books').success(function(data) {
-		$scope.book = $filter('getByISBN')(data, $routeParams.isbn);
-		$scope.mainImageUrl = ($scope.book === null) ? 'img/cover.png' : $scope.book.cover;
-	});
-	
+bookshopControllers.controller('BookDetailCtrl', ['$scope', '$routeParams', '$mdToast', 'BookCollection', 'BookReview','appServices', function($scope, $routeParams, $mdToast, BookCollection, BookReview, appServices) {
+    
+    appServices.getTranslation($scope, navigator.language || navigator.userLanguage || "fr");
+    
+    var collection = new BookCollection();
+    collection.getBooks().then(function(){
+        $scope.book = collection.getBook($routeParams.isbn);
+        $scope.mainImageUrl = ($scope.book === null) ? 'img/cover.png' : $scope.book.cover;
+        
+        var reviewer = new BookReview($scope.book);
+        reviewer.getReview().then(function(review) {
+            
+            $scope.average_rating = review.average_rating;
+			$scope.author = review.author_fullname;
+			$scope.original_publication_year = review.original_publication_year;
+        });
+    });
+    
 	$scope.goToCart = function() {
-		appServices.go('/cart');
+		appServices.goToUrl('/cart');
 	};
-	
+
 	$scope.addToCart = function(book) {
-		appServices.addToCart(book);
-		appServices.go('/cart');
+		var sMessage = appServices.addToCart(book);
+		$mdToast.show($mdToast.simple().content(sMessage).position('top right'));
+		//appServices.goToUrl('/cart'); // none of my testers liked to be redirected to the cart :(
 	};
 }]);
 
-bookshopControllers.controller('CartCtrl', ['$scope', 'appServices', '$http', '$mdDialog', '$mdToast','ngCart', function($scope, appServices, $http, $mdDialog, $mdToast, ngCart) {
-	appServices.computeBestReduction();
-
-	$scope.removeFromCart = function(isbn) {
-		ngCart.removeItemById(isbn);
-		appServices.computeBestReduction();
-	};
+bookshopControllers.controller('MyCartCtrl', ['$scope', '$http', '$mdDialog', '$mdToast', 'appServices', 'ngCart', function($scope, $http, $mdDialog, $mdToast, appServices, ngCart) {
+	
+	appServices.computeCartReduction(); // (re)compute at arrival
+	
+	appServices.getTranslation($scope, navigator.language || navigator.userLanguage || "fr");
 
 	$scope.backToShop = function() {
-		appServices.go('/books');
+		appServices.goToUrl('/books');
 	};
 
 	$scope.checkout = function(ev) {
+
 		if (ngCart.totalItems() > 0) {
-			var confirm = $mdDialog.confirm()
-				.title('Confirmation de la commande')
-				.content(ngCart.totalItems() + ' article(s) pour un total de ' + ngCart.totalCost() + '\u20AC')
-				.ok('Acheter')
-				.cancel('Annuler')
+			var mdDialogConfirm = $mdDialog.confirm()
+				.title($scope.translation.CHECKOUT_DIALOG_TITLE)
+				.content(ngCart.totalItems() + $scope.translation.CHECKOUT_DIALOG_ITEMS_NUMBER + ngCart.totalCost() + $scope.translation.CURRENCY_SYM)
+				.ok($scope.translation.PAY)
+				.cancel($scope.translation.CANCEL)
 				.targetEvent(ev)
 			;
-	
+
 			$mdDialog
-				.show(confirm)
+				.show(mdDialogConfirm)
 				.then(function() {
-					$scope.alert = 'Commande effectuee.';
+					$scope.alert = $scope.translation.ORDER_COMPLETE;
+					ngCart.empty();
 				},
 				function() {
 					$scope.alert = '';
-				});
+				})
+			;
 		}
 		else {
-			$mdToast.show($mdToast.simple().content("Votre panier est vide !").position('top right'));
+			$mdToast.show($mdToast.simple().content($scope.translation.YOUR_CART_EMPTY).position('top right'));
 		}
+	};
+}]);
+
+bookshopControllers.controller('NgCartCtrl', ['$scope', 'appServices', 'ngCart', function($scope, appServices, ngCart) {
+    
+    appServices.getTranslation($scope, navigator.language || navigator.userLanguage || "fr");
+    
+    $scope.removeFromCart = function(sISBN) {
+		ngCart.removeItemById(sISBN);
+		appServices.computeCartReduction();
 	};
 }]);

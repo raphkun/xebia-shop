@@ -3,7 +3,7 @@
   
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="favicon.ico">
+    <link rel="shortcut icon" id="favicon" href="favicon.ico" />
     <title>Xebia Bookshop</title>
     
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.css">
@@ -41,11 +41,11 @@
   <body layout="row">
   
     <md-sidenav layout="column" md-component-id="left" md-is-locked-open="$media('gt-sm')">
-        <md-toolbar style="min-height: 64px; max-height:64px;" layout="column" class="sidenav-toolbar">
+        <md-toolbar layout="column" class="sidenav-toolbar">
           <h1 class="md-toolbar-tools" flex layout="column">
             <a href="#books" layout="row" flex>
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24.00 24.00"><path d="M12 13C9.2384 13 7 10.7591 7 8L9 8C9 9.65506 10.3424 11 12 11C13.6564 11 15 9.65506 15 8L17 8C17 10.7591 14.7604 13 12 13ZM12 3C13.6564 3 15 4.34107 15 6L9 6C9 4.34107 10.3424 3 12 3ZM19 6L17 6C17 3.23707 14.7604 1 12 1C9.2384 1 7 3.23707 7 6L5 6C3.89438 6 3 6.89307 3 8L3 20C3 21.1031 3.89438 22 5 22L19 22C20.1034 22 21 21.1031 21 20L21 8C21 6.89307 20.1034 6 19 6Z" /></svg>
-              <div flex style="line-height:40px; text-indent: 15px;">Bookshop</div>
+              <img src="img/logo.svg" />
+              <div flex>&nbsp;Bookshop</div>
             </a>
           </h1>
         </md-toolbar>
@@ -55,10 +55,11 @@
     </md-sidenav>
     
     <div layout="column" layout-fill>
-        <md-toolbar layout="row" style="height:64px;line-height:64px;vertical-align:middle;overflow:hidden">
+        <md-toolbar layout="row">
           <div flex>&nbsp;</div>
           <div flex="10"><!-- todo profile picture --></div>
         </md-toolbar>
+        
         <md-content ng-view flex></md-content>
     </div>
   </body>

@@ -1,59 +1,47 @@
-<div class="md-warn" role="alert" ng-show="ngCart.totalItems() === 0">Votre panier est vide pour le moment</div>
-<div ng-controller="CartCtrl" ng-show="ngCart.totalItems() > 0" layout="row" layout-align="start start" layout-margin layout-fill>
-    <table class="cart">
-        <!--<thead>
-            <tr>
-                <th></th>
-                <th>Nom</th>
-                <th>Quantit&eacute;</th>
-                <th>Montant</th>
-                <th>Total</th>
-            </tr>
-        </thead>-->
-        <tbody>
-            <tr ng-repeat="item in ngCart.getCart().items track by $index">
-               <td class="item-img"><img ng-src="{{item.getData().cover}}"/></td>
-                <td class="item-name">
-                    <a ng-href="#books/{{item.getId()}}">{{ item.getName() }}</a>
-                </td>
-                <td class="item-qty">
-                    <!--<span ng-class="{'disabled':item.getQuantity()==1}" ng-click="item.setQuantity(-1, true)"><i class="fa fa-minus-square-o"></i></span>-->
-                    &nbsp;&nbsp; {{ item.getQuantity() | number }}&nbsp;&nbsp;
-                    <!--<span ng-click="item.setQuantity(1, true)"><i class="fa fa-plus-square-o"></i></span>-->
-                </td>
-                <!--<td>
-                    {{ item.getPrice() | currency}}
-                </td>-->
-                <td class="item-price">{{ item.getTotal() | currency }}</td>
-                <td class="item-action">
-                    <span ng-click="removeFromCart(item.getId())">
-                        <i class="fa fa-trash"></i>
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr ng-show="ngCart.getTax()">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="total-label">R&eacute;duction ({{ ngCart.getTaxRate() }}%)&nbsp;</td>
-                <td class="total-price">{{ ngCart.getTax() | currency }}</td>
-            </tr>
-            <tr ng-show="ngCart.getShipping()">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="total-label">R&eacute;duction&nbsp;</td>
-                <td class="total-price">{{ ngCart.getShipping() | currency }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="total-label">Total&nbsp;</td>
-                <td class="total-price">{{ ngCart.totalCost() | currency }}</td>
-            </tr>
-        </tfoot>
-    </table>
+<div ng-controller="NgCartCtrl">
+    <div class="md-warn" role="alert" ng-show="ngCart.totalItems() == 0">{{translation.YOUR_CART_EMPTY}}</div>
+    <div ng-show="ngCart.totalItems() > 0" layout="row" layout-align="start start" layout-margin layout-fill>
+        <table class="cart">
+            <tbody>
+                <tr ng-repeat="item in ngCart.getCart().items track by $index" ng-animate="'animate'">
+                   <td class="item-img"><img ng-src="{{item.getData().cover}}"/></td>
+                    <td class="item-name">
+                        <a ng-href="#books/{{item.getId()}}">{{ item.getName() }}</a>
+                    </td>
+                    <td class="item-qty">
+                        &nbsp;&nbsp; {{ item.getQuantity() | number }}&nbsp;&nbsp;
+                    </td>
+                    <td class="item-price">{{ item.getTotal() | currency }}</td>
+                    <td class="item-action">
+                        <span ng-click="removeFromCart(item.getId())" title="{{translation.REMOVE_FROM_CART}}">
+                            <i class="fa fa-trash"></i>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr ng-show="ngCart.getTax()">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="total-label">R&eacute;duction ({{ ngCart.getTaxRate() }}%)&nbsp;</td>
+                    <td class="total-price">{{ ngCart.getTax() | currency }}</td>
+                </tr>
+                <tr ng-show="ngCart.getShipping()">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="total-label">R&eacute;duction&nbsp;</td>
+                    <td class="total-price">{{ ngCart.getShipping() | currency }}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="total-label">Total&nbsp;</td>
+                    <td class="total-price">{{ ngCart.totalCost() | currency }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </div>

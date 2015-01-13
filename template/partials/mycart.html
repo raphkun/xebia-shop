@@ -1,11 +1,11 @@
-<md-content ng-controller="CartCtrl">
-  <h1>Votre panier</h1>
+<md-content ng-controller="MyCartCtrl">
+  <h1>{{translation.YOUR_CART}}</h1>
   <span>{{alert}}</span>
   <ngcart-cart layout-fill layout-margin></ngcart-cart>
   <md-content layout-fill layout-margin layout="row" layout-align="start start">
-    <div flex="60"></div>
-    <md-button flex="" class="md-raised" ng-click="backToShop()">Poursuivre mes achats</md-button>
-    <md-button flex="" class="md-raised md-primary" ng-click="checkout($event)">Proc&eacute;der au paiement</md-button>
-    <div flex="5"></div>
+    <div flex="45"></div>
+    <md-button flex="20" class="md-raised" ng-click="backToShop()">{{translation.BACK_TO_SHOP}}</md-button>
+    <md-button flex="15" class="md-raised md-primary" ng-click="checkout($event)">{{translation.CHECKOUT}}</md-button>
+    <div flex="10"></div>
   </md-content>
 </md-content>

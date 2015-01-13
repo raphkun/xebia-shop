@@ -10,7 +10,7 @@
 		}
 		
 			table.cart tbody tr td {
-				font-weight: 350;
+				font-weight: 400;
 				font-size: 18px;
 				color: #333;
 				text-align: center;
@@ -25,16 +25,16 @@
 					max-height: 70px;
 					max-width: 70px;
 				}
-			table.cart tbody tr td.item-name {
+			table.cart tbody tr .item-name {
 				text-align: left;
 			}
-			table.cart tbody tr td.item-qty {
+			table.cart tbody tr .item-qty {
 				width: 4%;
 			}
-			table.cart tbody tr td.item-price {
+			table.cart tbody tr .item-price {
 				width: 10%;
 			}
-			table.cart tbody tr td.item-action {
+			table.cart tbody tr .item-action {
 				width: 5%;
 			}
 				

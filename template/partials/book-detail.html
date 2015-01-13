@@ -1,4 +1,3 @@
-<!--<a href="#/books">&laquo; Retour Collection</a><hr/>-->
 <md-content layout-fill layout="row" layout-align="start start" layout-margin>
 	<div flex></div>
 	<md-button flex="5" class="md-raised" ng-click="goToCart()" aria-label="go to cart">
@@ -6,9 +5,13 @@
 	</md-button>
 </md-content>
 <md-content layout-fill layout="row" layout-align="center start">
-	<img flex ng-src="{{mainImageUrl}}" style="max-height:314px;max-width:200px" />
-	<md-content flex layout="column" layout-align="start start">
-		<h1 flex>{{book.title}}</h1>
-		<md-button class="md-raised md-primary" ng-click="addToCart(book)">Acheter {{book.price}} &euro;</md-button>
+	<img flex ng-src="{{mainImageUrl}}" class="book-cover"/>
+	<md-content flex layout="column" layout-align="start start" layout-margin>
+		<h1 flex layout-margin>{{book.title}}</h1>
+		<div layout-fill layout="row" layout-align="center start" layout-margin>
+		    <h6 flex="33" layout-margin>{{author}} (<i class="fa fa-star"></i>{{average_rating}}) {{original_publication_year}}</h6>
+		    <div flex layout-margin>{{widget}}</div>
+		</div>
+		<md-button class="md-raised md-primary" ng-click="addToCart(book)">{{translation.ADD_TO_CART}} {{book.price}} {{translation.CURRENCY_SYM}}</md-button>
 	</md-content>
 </md-content>
